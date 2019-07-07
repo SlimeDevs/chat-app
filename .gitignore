@@ -1,0 +1,14 @@
+* Build files
+dist/
+
+* Environment variables
+.env 
+
+* Vscode config
+.vscode 
+
+* Dependencies
+node_modules
+
+* Logs
+logs/

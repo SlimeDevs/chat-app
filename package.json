@@ -1,0 +1,65 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "A socket.io chat app",
+  "main": "index.js",
+  "scripts": {
+    "start": "set NODE_ENV=TEST&& tsc && node dist/index.js",
+    "ts-start": "set NODE_ENV=DEV&& node -r ts-node/register ./src/index.ts",
+	"dev": "set NODE_ENV=DEV&& nodemon",
+	"build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SlimeDevs/chat-app.git"
+  },
+  "keywords": [
+    "socket",
+    "socket.io",
+    "chat",
+    "chatting",
+    "chat",
+    "app",
+    "chat",
+    "application",
+    "websocket",
+    "socket",
+    "chat",
+    "app",
+    "chat-app"
+  ],
+  "author": "Brady Miller",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/SlimeDevs/chat-app/issues"
+  },
+  "homepage": "https://github.com/SlimeDevs/chat-app#readme",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.0",
+    "@types/socket.io": "^2.1.2",
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm run ts-start",
+    "ext": "ts"
+  }
+}
