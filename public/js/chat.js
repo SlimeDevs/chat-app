@@ -10,29 +10,64 @@ const $messages = document.querySelector('#messages')
 // Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationTemplate = document.querySelector('#location-template').innerHTML
+const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
+// Autoscroll function
+function autoScroll() {
+	// Grabs new message
+	const $newMessage = $messages.lastElementChild
+
+	// Find height of new message
+	const newMessageStyles = getComputedStyle($newMessage)
+	const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+	const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+
+	// Find visible height
+	const visibleHeight = $messages.offsetHeight
+
+	// Height of messages container
+	const containerHeight = $messages.scrollHeight
+	
+	// How far the client is currently scrolled
+	const scrollOffset = $messages.scrollTop + visibleHeight
+
+	if (containerHeight - newMessageHeight <= scrollOffset) { // If client was at the bottom of the page, autoscroll
+		$messages.scrollTop = $messages.scrollHeight
+	} // Otherwise, don't autoscroll
+}
 
 // Displays received messages
 socket.on('message', (messageValue) => {
-	console.log(messageValue)
 	const html = Mustache.render(messageTemplate, {
+		username: messageValue.username,
 		message: messageValue.text,
 		createdAt: moment(messageValue.createdAt).format('h:mm a')
 	})
 	$messages.insertAdjacentHTML('beforeend', html)
+	autoScroll()
 })
 
 // Displays received locations
 socket.on('locationMessage', (locationValue) => {
-	console.log(locationValue)
 	const html = Mustache.render(locationTemplate, {
+		username: locationValue.username,
 		location: locationValue.url,
 		createdAt: moment(locationValue.createdAt).format('h:mm a')
 	})
 	$messages.insertAdjacentHTML('beforeend', html)
+	autoScroll()
+})
+
+// Room data for sidebar
+socket.on('roomData', ({room, users}) => {
+	const html = Mustache.render(sidebarTemplate, {
+		room,
+		users
+	})
+	document.querySelector('#sidebar').innerHTML = html
 })
 
 // Sends the message to the chatroom
@@ -50,8 +85,6 @@ $messageForm.addEventListener('submit', (event) => {
 		if (error) {
 			return console.log(error)
 		}
-
-		console.log('Message delivered!')
 	})
 })
 
@@ -76,4 +109,10 @@ document.querySelector('#send-location').addEventListener('click', () => {
 	})
 })
 
-socket.emit('join', { username, room })
+// Attempts to join the room
+socket.emit('join', { username, room }, (error) => {
+	if (error) {
+		alert(error)
+		location.href = '/'
+	}
+})
