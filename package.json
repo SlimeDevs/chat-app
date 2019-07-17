@@ -7,7 +7,7 @@
     "start": "set NODE_ENV=TEST&& tsc && node dist/index.js",
     "ts-start": "set NODE_ENV=DEV&& node -r ts-node/register ./src/index.ts",
     "dev": "set NODE_ENV=DEV&& nodemon",
-	"prod": "set NODE_ENV=PRODUCTION&& node dist/index.js",
+    "prod": "set NODE_ENV=PRODUCTION&& node dist/index.js",
     "build": "tsc",
     "test": "ts-node src/index.ts &"
   },
