@@ -14,5 +14,5 @@ COPY . .
 RUN npm run build
 
 # Export port and start application
-EXPOSE 25501
+EXPOSE 8081
 CMD ["npm", "run", "prod"]
