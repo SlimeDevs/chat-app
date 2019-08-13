@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  chat:
+    container_name: chat-app
+    restart: always
+    build: .
+    ports:
+      - "25501:80"
