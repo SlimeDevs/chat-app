@@ -1,20 +1,20 @@
 import dotenv from "dotenv"; // Imports dotenv
+dotenv.config() // Loads .env file, if it exists
 
-// Uses dotenv if not in production
-if (process.env.NODE_ENV !== 'production') {
-    dotenv.config()
+// Allow numbers for the port variable
+interface IPort {
+    port: String | Number | undefined
 }
 
-// Defines the current environment type using NODE_ENV
-const env: string | undefined = process.env.NODE_ENV;
-if (!env) throw new Error('Node environment variable not found')
-const envString: string = env.toUpperCase();
+// Sets the env variables as the current environment variables
+let {
+    port
+}: NodeJS.ProcessEnv | IPort = process.env;
 
-// Sets port to a current environment variable, or 3000 if none is found
-const port: string | number = 
-    process.env.PORT || 
-    process.env['PORT_' + envString] ||
-    3000;
+// Sets port 3000 to default port if none is found
+if (!port) {
+    port = 3000;
+}
 
-// Exports the environment variables
+// Exports the env vars
 export { port }
