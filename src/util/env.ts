@@ -11,9 +11,9 @@ let {
     port
 }: NodeJS.ProcessEnv | IPort = process.env;
 
-// Sets port 3000 to default port if none is found
+// Sets port 80 to default port if none is found
 if (!port) {
-    port = 3000;
+    port = 80;
 }
 
 // Exports the env vars
